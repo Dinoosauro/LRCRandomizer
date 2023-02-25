@@ -60,7 +60,7 @@ function downloadFile(textContent, fileName) {
     a.click();
 }
 function readLrc(fileId) {
-    fileId.forEach(inputItem => {
+    Array.from(fileId).forEach(inputItem => {
         let readFile = new FileReader();
         readFile.readAsText(inputItem);
         readFile.onload = function () {
