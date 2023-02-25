@@ -1,0 +1,55 @@
+body {
+    background-image: url(/assets/background.jpg);
+    background-repeat: no-repeat;
+    background-position: center; 
+    background-size: cover;
+    overflow: hidden;
+    margin: 0px;
+}
+.centerv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    height: 100%;
+    width: 100vw;
+}
+.container {
+    height: 100vh;
+}
+.alert {
+    text-align: center;
+    font-family: 'Work Sans', 'sans-serif';
+    width: 100vw;
+}
+.underline {
+    text-decoration: underline;
+}
+.underline:hover {
+    color: lightcoral;
+    cursor:pointer;
+}
+.absolutetop {
+    position: absolute;
+    top: 0;
+    margin-top: 15px;   
+    text-align: center;
+    width: 100vw;
+}
+h1,l {
+    font-family: 'Work Sans', 'Sans Serif';
+}
+.ondrop {
+    border-style: dashed;
+    border-width: 3px;
+    border-color: white;
+    border-radius: 10px;
+}
+.startHtml {
+    padding: 15px;
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);    
+}
+.nodisplay {
+    display: none;
+}

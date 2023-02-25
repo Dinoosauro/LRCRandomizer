@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+
+<head>
+    <title>LRC Randomizer</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+    <input type="file" id="input" class="nodisplay">
+    <div class="startHtml">
+<div class="container" id="drophere" ondrop="dropHandler(event)" ondragover="dragOverHandler(event)" ondragenter="changeDropNotice(true)" ondragleave="changeDropNotice(false);">
+        <div class="centerv">
+            <div>
+                <div class="absolutetop">
+                    <h1>RandomizeLRC</h1>
+                    <l>Change the timestamp of a few milliseconds of the .lrc files.</l>
+                </div>          
+            <div style="height: 72px" class="centerv">
+                <span><img src="/assets/file.svg" height="72px" width="72px"></span><span><img src="/assets/folder.svg" height="72px" width="72px"></span>
+            </div><br><br>
+            <div class="alert">
+            <l class="alert">Drop here the files or <span class="underline" onclick="openFile()">open File Picker</span></l>
+            </div>
+        </div>  
+        </div>
+    </div>
+        </div>
+</div>
+<script src="/script.js"></script>
+</body>
