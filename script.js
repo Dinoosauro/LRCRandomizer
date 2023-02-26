@@ -1,6 +1,7 @@
 let JSZipLoaded = false;
 let localZip = null;
 let convertNumber = 0;
+let totalLog = "";
 function convertFile(ReadFile) {
     for (let i = 0; i < ReadFile.length; i++) {
         if (ReadFile[i].indexOf("]") == -1) continue;
@@ -10,7 +11,6 @@ function convertFile(ReadFile) {
         if (options.options.value.bothAdditionSubtraction == "1") choosePlusOrMinus = 2; else if (options.options.value.bothAdditionSubtraction == "2") choosePlusOrMinus = 1;
         let cutThis = 2;
         if (choosePlusOrMinus == 1) cutThis = randomInt(options.options.value.minSubtraction, options.options.value.maxSubtraction); else cutThis = randomInt(options.options.value.minAddition, options.options.value.maxAddition);
-        console.log(choosePlusOrMinus + "->" + cutThis);
         if (choosePlusOrMinus == 2) cutThis = randomInt(1, 8);
         let composeNew = [parseInt(ReadChange.substring(1, 3)), parseInt(ReadChange.substring(4, 6)), parseInt(ReadChange.substring(7, 9))];
         if (choosePlusOrMinus == 1) {
@@ -49,10 +49,11 @@ function convertFile(ReadFile) {
             }
         }
         let converrtThing = [composeNew[0].toString(), composeNew[1].toString(), composeNew[2].toString()];
-        if (converrtThing[0].length == 1) converrtThing[0] = "0" + converrtThing[0];
-        if (converrtThing[1].length == 1) converrtThing[1] = "0" + converrtThing[1];
-        if (converrtThing[2].length == 1) converrtThing[2] = "0" + converrtThing[2];
-        ReadFile[i] = "[" + converrtThing[0] + ":" + converrtThing[1] + "." + converrtThing[2] + "]" + ReadFile[i].substring(10);
+        if (converrtThing[0].length == 1) converrtThing[0] = `0${converrtThing[0]}`;
+        if (converrtThing[1].length == 1) converrtThing[1] = `0${converrtThing[1]}`;
+        if (converrtThing[2].length == 1) converrtThing[2] = `0${converrtThing[2]}`;
+        ReadFile[i] = `[${converrtThing[0]}: ${converrtThing[1]}.${converrtThing[2]}]${ReadFile[i].substring(10)}`;
+        if (totalLog != "") totalLog = totalLog + `\n[${getDate()}] Addition (2) / Subtraction (1) (-> ${choosePlusOrMinus}) for line ${i} of ${cutThis} milliseconds    (File: ${convertNumber})`;
     }
     convertNumber++;
     return ReadFile.join("\n");
@@ -62,19 +63,22 @@ function randomInt(min, max) {
 }
 function downloadFile(textContent, fileName) {
     if (localZip !== null) {
+        if (totalLog != "") totalLog = totalLog + `\n[${getDate()}]Zipping file ${fileName}`; 
         localZip.file(fileName, textContent);  
     } else {
-        saveElement(textContent, fileName)
+        if (totalLog != "") totalLog = totalLog + `\n[${getDate()}]Downloading file ${fileName}`; 
+        saveElement(textContent, fileName, "lrc")
     }
 }
-function saveElement(textContent, fileName) {
+function saveElement(textContent, fileName, extension) {
     let a = document.createElement("a");
     a.href = URL.createObjectURL(new Blob([textContent], { type: "text/plain" }));
-    if (fileName.endsWith(".zip")) a.download = fileName; else a.download = fileName.substring(0, fileName.lastIndexOf(".")) + ".lrc";
+    a.download = getOptionMap().options.value.fileFormat.replaceAll("{FinalExtension}", extension).replaceAll("{FileName}", fileName);
     a.click();
 }
 function readLrc(fileId) {
     let options = getOptionMap();
+    if (options.options.value.enableLogging == 1 || options.options.value.enableLogging == 2) totalLog = "[RandomizeLRC Web - Version 0.9.0 (Beta)]";
     if (options.options.value.useZip == 0 && fileId.length > 1) getZip(); else if (options.options.value.useZip == 1) getZip();
     if (JSZipLoaded == true && localZip == null) {
         setTimeout(function() {
@@ -87,6 +91,7 @@ function readLrc(fileId) {
         let readFile = new FileReader();
         readFile.readAsText(inputItem);
         readFile.onload = function () {
+            if (totalLog != "") totalLog = totalLog + `\n[${getDate()}]Successful read of ${inputItem.name}. Starting converting.\n____________________\nConversion Stats\n____________________`;
             downloadFile(convertFile(readFile.result.split("\n")), inputItem.name);
             if (convertNumber > fileId.length - 1) exportZip();
         }
@@ -94,10 +99,15 @@ function readLrc(fileId) {
 }
 function exportZip() {
     if (localZip != null) {
+        if (totalLog != "") totalLog = totalLog + `\n[${getDate()}]Zipping final file...` ;
         localZip.generateAsync({ type: "blob" }).then(function(content) {
-            saveElement(content, "LRCLyrics.zip");
+            saveElement(content, "LRCLyrics", "zip");
             localZip = null;
         });      
+    }
+    if (totalLog != "") {
+        let options = getOptionMap();
+        if (options.options.value.enableLogging == 2) saveElement(totalLog, "RandomizeLRC.log", "txt"); else if (options.options.value.enableLogging == 1) console.log(totalLog);
     }
 }
 function openFile() {
@@ -113,9 +123,11 @@ function dropHandler(ev) {
     convertNumber = 0;
     changeDropNotice(false);
     if (ev.dataTransfer.items) {
+        let fileToPass = [];
         for (let i = 0; i < ev.dataTransfer.items.length; i++) {
-            if (ev.dataTransfer.items[i].kind === 'file') readLrc([ev.dataTransfer.items[i].getAsFile()]); else readLrc(ev.dataTransfer.files[i]);
-        };
+            if (ev.dataTransfer.items[i].kind === 'file') fileToPass[fileToPass.length] = ev.dataTransfer.items[i].getAsFile(); else fileToPass[fileToPass.length] = ev.dataTransfer.files[i];
+        }
+        readLrc(fileToPass);
     }
 }
 function dragOverHandler(ev) {
@@ -137,7 +149,9 @@ function getOptionMap() {
                 "minAddition": getStorage("minAddition", 1),
                 "maxAddition": getStorage("maxAddition", 8),
                 "useZip": getStorage("useZip", 0),
-                "bothAdditionSubtraction": getStorage("bothAdditionSubtraction", 0)
+                "bothAdditionSubtraction": getStorage("bothAdditionSubtraction", 0),
+                "fileFormat": getStorage("fileFormat", "{FileName}.{FinalExtension}"),
+                "enableLogging": getStorage("enableLogging", 0)
             }
         }
     }
@@ -174,10 +188,12 @@ function getZip() {
 function setSettingValue() {
     let options = getOptionMap();
     let randomKeys = Object.keys(options.options.value);
-    console.log(randomKeys);
     for (let i = 0; i < randomKeys.length; i++) {
-        console.log(randomKeys[i]);
         document.getElementById(randomKeys[i]).value = options.options.value[randomKeys[i]];
     }
     showDialog("settingDialog", false);
+}
+function getDate() {
+    let date = new Date();
+    return `${date.getFullYear()}-${date.getMonth()}-${date.getDay()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}.${date.getMilliseconds()}`;
 }
