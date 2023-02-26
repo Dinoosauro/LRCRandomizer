@@ -14,6 +14,28 @@ body {
     height: 100%;
     width: 100vw;
 }
+.dialogContainer {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 1;
+    width: 100vw;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    overflow-y: hidden;
+    background-color: rgb(0,0,0,0.8);
+}
+.dialogContent {
+    margin: 15% auto;
+    width: 75%;
+    border-radius: 8px;
+    padding: 15px;
+    overflow-y: scroll;
+    color: white;
+    height: 60%;
+    background-color: rgb(30,30,30);
+}
 .container {
     height: 100vh;
 }
@@ -29,14 +51,20 @@ body {
     color: lightcoral;
     cursor:pointer;
 }
-.absolutetop {
+.absolute {
     position: absolute;
-    top: 0;
     margin-top: 15px;   
     text-align: center;
     width: 100vw;
 }
-h1,l {
+.top {
+    top: 0;
+}
+.bottom {
+    margin-bottom: 40px;
+    bottom: 0;
+}
+h1,l,h2,h3,h4, option, select {
     font-family: 'Work Sans', 'Sans Serif';
 }
 .ondrop {
@@ -52,4 +80,20 @@ h1,l {
 }
 .nodisplay {
     display: none;
+}
+.inputNumber {
+    width: 50px; 
+    height: 18px;
+    margin-left: 3px;
+    margin-right: 3px;
+}
+.collapse {
+    visibility: collapse;
+}
+.darkSelect {
+    background-color: rgb(45,45,45);
+    border-color: rgb(110,110,110);
+    border-radius: 4px;
+    border-width: 2px;
+    color: white;
 }
