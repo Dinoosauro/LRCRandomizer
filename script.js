@@ -52,7 +52,7 @@ function convertFile(ReadFile) {
         if (converrtThing[0].length == 1) converrtThing[0] = `0${converrtThing[0]}`;
         if (converrtThing[1].length == 1) converrtThing[1] = `0${converrtThing[1]}`;
         if (converrtThing[2].length == 1) converrtThing[2] = `0${converrtThing[2]}`;
-        ReadFile[i] = `[${converrtThing[0]}: ${converrtThing[1]}.${converrtThing[2]}]${ReadFile[i].substring(10)}`;
+        ReadFile[i] = `[${converrtThing[0]}:${converrtThing[1]}.${converrtThing[2]}]${ReadFile[i].substring(10)}`;
         if (totalLog != "") totalLog = totalLog + `\n[${getDate()}] Addition (2) / Subtraction (1) (-> ${choosePlusOrMinus}) for line ${i} of ${cutThis} milliseconds    (File: ${convertNumber})`;
     }
     convertNumber++;
