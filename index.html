@@ -3,6 +3,7 @@
 <head>
     <title>LRC Randomizer</title>
     <link rel="stylesheet" href="/style.css">
+    <base href="https://dinoosauro.github.io/LRCRandomizer" target="_blank">
 </head>
 
 <body>
@@ -18,7 +19,14 @@
                         <l>Change the timestamp of a few milliseconds of the .lrc files.</l>
                     </div>
                     <div class="absolute bottom">
-                        <img src="/assets/settings.svg" width="40px" height="40px" onclick="setSettingValue()" class="underline">
+                        <img src="/assets/settings.svg" width="40px" height="40px" onclick="setSettingValue()"
+                            class="underline">
+                        <img src="/assets/camera.svg" width="40px" height="40px"
+                            onclick="window.open('https://github.com/Dinoosauro/LRCRandomizer/blob/main/Credits.md')"
+                            class="underline leftMargin ">
+                        <img src="/assets/github.svg" width="30px" style="margin-bottom: 5px" height="30px"
+                            onclick="window.open('https://github.com/Dinoosauro/LRCRandomizer/')"
+                            class="underline leftMargin">
                     </div>
                     <div style="height: 72px" class="centerv">
                         <span><img src="/assets/file.svg" height="72px" width="72px"></span><span><img
@@ -32,42 +40,52 @@
             </div>
         </div>
     </div>
-</div>
+    </div>
     <div class="dialogContainer collapse" id="settingDialog">
         <div class="dialogContent">
-            <div style="width: 100%; display: inline; float: left; display: inline; padding-top: 10px; padding-bottom: 25px;">
-                    <h2 style="display: inline;">Addition and subtraction</h2>
-                    <img src="/assets/save.svg" style="float: right;" height="28px" width="28px" onclick="saveSettings()" class="underline">
+            <div
+                class="dialogTitle">
+                <h2 style="display: inline;">Addition and subtraction</h2>
+                <img src="/assets/save.svg" style="float: right;" height="28px" width="28px" onclick="saveSettings()"
+                    class="underline">
             </div>
             <div>
-        <l>Allow:</l>
-        <select id="bothAdditionSubtraction" class="darkSelect">
-            <option value="0">Both addition and subtraction (default)</option>
-            <option value="1">Only addition</option>
-            <option value="2">Only subtraction</option>
-        </select>
-        <br>
-        <h4>Subtraction</h4>
-        <l>For subtracion, generate a number from: </l> <input type="number" min="1" id="minSubtraction" placeholder="1" class="inputNumber darkSelect"> <l> to: </l> <input type="number" id="maxSubtraction" min="1" class="inputNumber darkSelect" placeholder="15"> <l> milliseconds.</l>
-        <h4>Addition</h4>
-        <l>For addition, generate a number from: </l> <input type="number" min="1" id="minAddition" placeholder="1" class="inputNumber darkSelect"> <l> to: </l> <input type="number" id="maxAddition" min="1" class="inputNumber darkSelect" placeholder="8"> <l> milliseconds.</l>
-        <h2>File output:</h2> <br>
-        <l>Export the files as zip: </l>
-        <select id="useZip" class="darkSelect">
-            <option value="0">If more than a file is selected (default)</option>
-            <option value="1">Always</option>
-            <option value="2">Never</option>
-            </select>
-            <br><br>
-            <l>File name format:</l><input type="text" id="fileFormat" class="inputText darkSelect"><br><br>
-            <l>Enable logging: </l>
-            <select id="enableLogging" class="darkSelect">
-                <option value="0">No (default)</option>
-                <option value="1">Yes, print into the Console</option>
-                <option value="2">Yes, download as a separated file</option>
-            </select>
+                <l>Allow:</l>
+                <select id="bothAdditionSubtraction" class="darkSelect">
+                    <option value="0">Both addition and subtraction (default)</option>
+                    <option value="1">Only addition</option>
+                    <option value="2">Only subtraction</option>
+                </select>
+                <br>
+                <h4>Subtraction</h4>
+                <l>For subtracion, generate a number from: </l> <input type="number" min="1" id="minSubtraction"
+                    placeholder="1" class="inputNumber darkSelect">
+                <l> to: </l> <input type="number" id="maxSubtraction" min="1" class="inputNumber darkSelect"
+                    placeholder="15">
+                <l> milliseconds.</l>
+                <h4>Addition</h4>
+                <l>For addition, generate a number from: </l> <input type="number" min="1" id="minAddition"
+                    placeholder="1" class="inputNumber darkSelect">
+                <l> to: </l> <input type="number" id="maxAddition" min="1" class="inputNumber darkSelect"
+                    placeholder="8">
+                <l> milliseconds.</l>
+                <h2>File output:</h2> <br>
+                <l>Export the files as zip: </l>
+                <select id="useZip" class="darkSelect">
+                    <option value="0">If more than a file is selected (default)</option>
+                    <option value="1">Always</option>
+                    <option value="2">Never</option>
+                </select>
+                <br><br>
+                <l>File name format:</l><input type="text" id="fileFormat" class="inputText darkSelect"><br><br>
+                <l>Enable logging: </l>
+                <select id="enableLogging" class="darkSelect">
+                    <option value="0">No (default)</option>
+                    <option value="1">Yes, print into the Console</option>
+                    <option value="2">Yes, download as a separated file</option>
+                </select>
+            </div>
+        </div>
     </div>
-    </div>
-</div>
     <script src="/script.js"></script>
 </body>

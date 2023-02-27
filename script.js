@@ -158,6 +158,7 @@ function getOptionMap() {
 }
 function showDialog(dialogName, hidden) {
     if (hidden) document.getElementById(dialogName).style.visibility = "collapse"; else document.getElementById(dialogName).style.visibility = "visible";
+    if (hidden) document.getElementById(dialogName).style.opacity = 0; else document.getElementById(dialogName).style.opacity = 1;
 }
 function saveSettings() {
     let options = getOptionMap();
