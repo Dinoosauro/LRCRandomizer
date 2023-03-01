@@ -10,8 +10,7 @@ function convertFile(ReadFile) {
         let options = getOptionMap();
         if (options.options.value.bothAdditionSubtraction == "1") choosePlusOrMinus = 2; else if (options.options.value.bothAdditionSubtraction == "2") choosePlusOrMinus = 1;
         let cutThis = 2;
-        if (choosePlusOrMinus == 1) cutThis = randomInt(options.options.value.minSubtraction, options.options.value.maxSubtraction); else cutThis = randomInt(options.options.value.minAddition, options.options.value.maxAddition);
-        if (choosePlusOrMinus == 2) cutThis = randomInt(1, 8);
+        if (choosePlusOrMinus == 1) cutThis = randomInt(parseInt(options.options.value.minSubtraction), parseInt(options.options.value.maxSubtraction)); else cutThis = randomInt(parseInt(options.options.value.minAddition), parseInt(options.options.value.maxAddition));
         let composeNew = [parseInt(ReadChange.substring(1, 3)), parseInt(ReadChange.substring(4, 6)), parseInt(ReadChange.substring(7, 9))];
         if (choosePlusOrMinus == 1) {
             let zeroTotal = false;
@@ -164,10 +163,8 @@ function saveSettings() {
     let options = getOptionMap();
     let randomKeys = Object.keys(options.options.value);
     for (let i = 0; i < randomKeys.length; i++) {
-        console.log(randomKeys[i]);
         if (document.getElementById(randomKeys[i]).value != "") localStorage.setItem(randomKeys[i], document.getElementById(randomKeys[i]).value);
     }
-    console.log(getOptionMap());
     showDialog("settingDialog", true);
 }
 function getZip() {
@@ -179,7 +176,6 @@ function getZip() {
         JSZipLoader.onload = function() {
             localZip = new JSZip();
         }
-        console.log(JSZipLoader);
         document.body.append(JSZipLoader);
         JSZipLoaded = true;
     } else {
